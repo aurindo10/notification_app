@@ -1,0 +1,10 @@
+version: "3"
+services:
+  otica:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_DB=notification_app
+      - POSTGRES_PASSWORD=notification_app
