@@ -1,15 +1,16 @@
 package repositories
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 
 	"github.com/aurindo10/config"
 	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-func NewDb() *sql.DB {
+func NewDb() *gorm.DB {
 	// Carrega as variáveis de ambiente
 	config.LoadEnv()
 
@@ -25,14 +26,12 @@ func NewDb() *sql.DB {
 		dbUser, dbName, dbPassword, dbHost, dbPort)
 
 	// Abre a conexão com o banco de dados
-	db, err := sql.Open("postgres", connStr)
+	db, err := gorm.Open(postgres.Open(connStr), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("Erro ao abrir a conexão com o banco de dados: %v", err)
 	}
 
-	defer db.Close()
 	// Verifica se a conexão está funcionando
-	err = db.Ping()
 	if err != nil {
 		log.Fatalf("Erro ao conectar ao banco de dados: %v", err)
 	}

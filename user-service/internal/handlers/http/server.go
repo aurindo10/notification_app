@@ -1,12 +1,13 @@
 package server
 
 import (
-	"database/sql"
 	"net/http"
+
+	"gorm.io/gorm"
 )
 
 func NewServer(
-	db *sql.DB,
+	db *gorm.DB,
 ) http.Handler {
 	mux := http.NewServeMux()
 	NewHandlers(mux).StartHandlers()

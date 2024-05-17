@@ -21,7 +21,7 @@ func Run(
 	ctx, cancel := signal.NotifyContext(ctx, os.Interrupt)
 	defer cancel()
 	db := repositories.NewDb()
-	defer db.Close()
+
 	srv := server.NewServer(db)
 	httpServer := &http.Server{
 		Addr:    net.JoinHostPort("", "3000"),
