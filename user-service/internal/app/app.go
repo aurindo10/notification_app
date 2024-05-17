@@ -27,7 +27,6 @@ func Run(
 		Addr:    net.JoinHostPort("", "3000"),
 		Handler: srv,
 	}
-
 	go func() {
 		log.Printf("listening on %s\n", httpServer.Addr)
 		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {

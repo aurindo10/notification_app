@@ -29,6 +29,7 @@ func NewDb() *sql.DB {
 	if err != nil {
 		log.Fatalf("Erro ao abrir a conexão com o banco de dados: %v", err)
 	}
+
 	defer db.Close()
 	// Verifica se a conexão está funcionando
 	err = db.Ping()
