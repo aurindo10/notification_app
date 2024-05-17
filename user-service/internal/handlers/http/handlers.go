@@ -3,8 +3,12 @@ package server
 import (
 	"net/http"
 
+	"github.com/aurindo10/internal/entities"
 	_ "github.com/aurindo10/internal/handlers/http/docs"
+	"github.com/aurindo10/internal/services"
+	"github.com/aurindo10/pkg/utils"
 	httpSwagger "github.com/swaggo/http-swagger"
+	"gorm.io/gorm"
 )
 
 // @title           Notification App API
@@ -25,6 +29,7 @@ import (
 // @schemes   http https
 type Handlers struct {
 	mux *http.ServeMux
+	db  *gorm.DB
 }
 
 // RegisterUser handles user registration
@@ -35,8 +40,17 @@ type Handlers struct {
 // @Success      200  {string}  string "message"
 // @Router       /registeruser [get]
 func (c *Handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
-	res := []byte("Olá")
-	w.Write(res)
+	decoded, _, err := utils.DecodeValid[entities.User](r)
+	if err != nil {
+		utils.Encode(w, r, 400, err.Error())
+	}
+	res, err := services.RegisterUserService(c.db, &decoded)
+	if err != nil {
+		utils.Encode(w, r, 400, err.Error())
+	}
+	if res != nil {
+		utils.Encode(w, r, 201, res)
+	}
 }
 
 // StartHandlers initializes the handlers
