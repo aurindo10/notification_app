@@ -40,10 +40,11 @@ type Handlers struct {
 // @Success      200  {string}  string "message"
 // @Router       /registeruser [get]
 func (c *Handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
-	decoded, _, err := utils.DecodeValid[entities.User](r)
+	decoded, _, err := utils.DecodeValid[entities.UserResquest](r)
 	if err != nil {
 		utils.Encode(w, r, 400, err.Error())
 	}
+
 	res, err := services.RegisterUserService(c.db, &decoded)
 	if err != nil {
 		utils.Encode(w, r, 400, err.Error())
@@ -58,8 +59,9 @@ func (c *Handlers) StartHandlers() {
 	c.mux.HandleFunc("/api/v1/registeruser", c.RegisterUser)
 	c.mux.Handle("/swagger/", httpSwagger.WrapHandler)
 }
-func NewHandlers(mux *http.ServeMux) *Handlers {
+func NewHandlers(mux *http.ServeMux, db *gorm.DB) *Handlers {
 	return &Handlers{
 		mux: mux,
+		db:  db,
 	}
 }

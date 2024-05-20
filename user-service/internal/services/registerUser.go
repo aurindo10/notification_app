@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func RegisterUserService(db *gorm.DB, c *entities.User) (*repositories.UserResponseRepository, error) {
+func RegisterUserService(db *gorm.DB, c *entities.UserResquest) (*repositories.UserResponseRepository, error) {
 	repo := repositories.NewUserRepository(db)
 	usecase := usecases.NewRegisterUserUserCase(repo)
 	res, err := usecase.Execute(c)

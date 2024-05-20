@@ -11,7 +11,6 @@ type UserRepository struct {
 
 func (c *UserRepository) RegisterUser(p *entities.User) (*UserResponseRepository, error) {
 	user := &UserDB{
-		Id:        p.Id,
 		Username:  p.Username,
 		Password:  p.Password,
 		Name:      p.Name,
@@ -20,6 +19,7 @@ func (c *UserRepository) RegisterUser(p *entities.User) (*UserResponseRepository
 	}
 	res := c.db.Create(&user)
 	if res.Error != nil {
+		println(res.Error.Error())
 		return nil, res.Error
 	}
 	return &UserResponseRepository{

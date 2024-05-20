@@ -30,7 +30,10 @@ func NewDb() *gorm.DB {
 	if err != nil {
 		log.Fatalf("Erro ao abrir a conexão com o banco de dados: %v", err)
 	}
-
+	err = db.AutoMigrate(&UserDB{})
+	if err != nil {
+		log.Fatalf("Erro ao abrir a conexão com o banco de dados: %v", err)
+	}
 	// Verifica se a conexão está funcionando
 	if err != nil {
 		log.Fatalf("Erro ao conectar ao banco de dados: %v", err)

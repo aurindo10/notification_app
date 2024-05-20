@@ -14,7 +14,14 @@ type User struct {
 	Last_name *string   `json:"last_name"`
 	Email     *string   `json:"email"`
 }
+type UserResquest struct {
+	Username  string  `json:"username"`
+	Password  string  `json:"password"`
+	Name      string  `json:"name"`
+	Last_name *string `json:"last_name"`
+	Email     *string `json:"email"`
+}
 
-func (c User) Valid(ctx context.Context) (problems map[string]string) {
+func (c UserResquest) Valid(ctx context.Context) (problems map[string]string) {
 	return nil
 }

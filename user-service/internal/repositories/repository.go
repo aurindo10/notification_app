@@ -15,7 +15,7 @@ type Repository interface {
 }
 
 type UserDB struct {
-	Id        uuid.UUID `gorm:"primaryKey;column:id"`
+	Id        uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4()"`
 	Username  string    `gorm:"column:username"`
 	Password  string    `gorm:"column:password"`
 	Name      string    `gorm:"column:name"`

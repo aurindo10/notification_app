@@ -10,7 +10,7 @@ func NewServer(
 	db *gorm.DB,
 ) http.Handler {
 	mux := http.NewServeMux()
-	NewHandlers(mux).StartHandlers()
+	NewHandlers(mux, db).StartHandlers()
 	var handler http.Handler = mux
 	return handler
 }
