@@ -11,16 +11,16 @@ type RegisterUserUserCase struct {
 }
 
 func (c *RegisterUserUserCase) Execute(p *entities.UserResquest) (*repositories.UserResponseRepository, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(p.Password), bcrypt.DefaultCost)
+	bytes, err := bcrypt.GenerateFromPassword([]byte(*p.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil, err
 	}
 	encryptedPassword := string(bytes)
 
 	newUser := &entities.User{
-		Username:  p.Username,
+		Username:  *p.Username,
 		Password:  encryptedPassword,
-		Name:      p.Name,
+		Name:      *p.Name,
 		Last_name: p.Last_name,
 		Email:     p.Email,
 	}

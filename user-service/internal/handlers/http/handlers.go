@@ -40,14 +40,19 @@ type Handlers struct {
 // @Success      200  {string}  string "message"
 // @Router       /registeruser [get]
 func (c *Handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
-	decoded, _, err := utils.DecodeValid[entities.UserResquest](r)
+	decoded, problems, err := utils.DecodeValid[entities.UserResquest](r)
 	if err != nil {
+		if len(problems) > 0 {
+			utils.Encode(w, r, 400, problems)
+			return
+		}
 		utils.Encode(w, r, 400, err.Error())
+		return
 	}
-
 	res, err := services.RegisterUserService(c.db, &decoded)
 	if err != nil {
 		utils.Encode(w, r, 400, err.Error())
+		return
 	}
 	if res != nil {
 		utils.Encode(w, r, 201, res)
