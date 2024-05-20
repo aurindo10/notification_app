@@ -6,8 +6,8 @@ import (
 )
 
 type UserResponseRepository struct {
-	Sucess bool
-	Id     uuid.UUID
+	Sucess bool      `json:"sucess"`
+	Id     uuid.UUID `json:"id"`
 }
 
 type Repository interface {
