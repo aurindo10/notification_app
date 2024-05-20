@@ -9,9 +9,9 @@ type UserResponseRepository struct {
 	Sucess bool      `json:"sucess"`
 	Id     uuid.UUID `json:"id"`
 }
-
 type Repository interface {
 	RegisterUser(p *entities.User) (*UserResponseRepository, error)
+	IsEmailAlreadyExists(p *string) (*UserDB, error)
 }
 
 type UserDB struct {
