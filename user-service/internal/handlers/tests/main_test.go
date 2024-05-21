@@ -17,10 +17,7 @@ func TestMain(m *testing.M) {
 	go app.Run(ctx, dbtest, isRead)
 	<-isRead
 	code := m.Run()
-	error := repositories.ClearDb(dbtest, dbName)
-	if error != nil {
-		println(error.Error())
-	}
+	defer repositories.ClearDb(dbName)
 	cancel()
 	os.Exit(code)
 }
