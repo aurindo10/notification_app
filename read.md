@@ -6,4 +6,6 @@
 [x] Fechar conexão no test main antes de dropar a tabela
 [x] Inserir uma nova instancia do bd dentro de clear db
 [x] Fazer test de cadastro de usuário duplicado
-[] Login end point
+[x] Login end point
+[x] Testes do endpoint de login sucess
+[] Testes do endpoint de login incorrect password

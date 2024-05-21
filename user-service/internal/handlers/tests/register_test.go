@@ -105,3 +105,25 @@ func TestLogin(t *testing.T) {
 	}
 	println(*res.Token)
 }
+func TestLoginWithWrongPassword(t *testing.T) {
+	clientData := map[string]string{
+		"email":    "johndaosea@example.com",
+		"password": "passwords1234",
+	}
+	clientDataJson, error := json.Marshal(clientData)
+	if error != nil {
+		t.Fatalf("Erro ao converter dados do cliente para JSON: %v", error)
+	}
+	resp, err := http.Post("http://localhost:3000/api/v1/login", "application/json", bytes.NewBuffer(clientDataJson))
+	if err != nil {
+		t.Fatalf("Erro na solicitação: %v", err)
+	}
+	defer resp.Body.Close()
+	var res string
+	if error := json.NewDecoder(resp.Body).Decode(&res); error != nil {
+		t.Fatal("Erro ao decodificar")
+	}
+	if res != "email ou senha incorreto" {
+		t.Fatal("Houve algum error")
+	}
+}
