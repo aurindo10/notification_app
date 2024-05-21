@@ -30,6 +30,13 @@ func NewDb() *gorm.DB {
 	if err != nil {
 		log.Fatalf("Erro ao abrir a conexão com o banco de dados: %v", err)
 	}
+	db.Exec("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";")
+
+	// Optional: Update existing rows to have a UUID
+	// db.Exec("UPDATE user_dbs SET id = uuid_generate_v4() WHERE id IS NULL;")
+
+	// Set default value for the id column to use uuid_generate_v4()
+	// db.Exec("ALTER TABLE user_dbs ALTER COLUMN id SET DEFAULT uuid_generate_v4();")
 	err = db.AutoMigrate(&UserDB{})
 	if err != nil {
 		log.Fatalf("Erro ao abrir a conexão com o banco de dados: %v", err)

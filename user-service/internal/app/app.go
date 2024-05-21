@@ -12,16 +12,16 @@ import (
 	"time"
 
 	server "github.com/aurindo10/internal/handlers/http"
-	"github.com/aurindo10/internal/repositories"
+	"gorm.io/gorm"
 )
 
 func Run(
 	ctx context.Context,
+	db *gorm.DB,
+	readyChan chan bool,
 ) error {
 	ctx, cancel := signal.NotifyContext(ctx, os.Interrupt)
 	defer cancel()
-	db := repositories.NewDb()
-
 	srv := server.NewServer(db)
 	httpServer := &http.Server{
 		Addr:    net.JoinHostPort("", "3000"),
@@ -33,6 +33,8 @@ func Run(
 			fmt.Fprintf(os.Stderr, "error listening and serving: %s\n", err)
 		}
 	}()
+	time.Sleep(2 * 60)
+	readyChan <- true
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go func() {
