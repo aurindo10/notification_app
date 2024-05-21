@@ -30,12 +30,17 @@ func (c *UserRepository) RegisterUser(p *entities.User) (*UserResponseRepository
 func (c *UserRepository) IsEmailAlreadyExists(email *string) (*UserDB, error) {
 	var user UserDB
 	if err := c.db.Where("email = ?", email).First(&user).Error; err != nil {
-		println(err.Error())
 		return nil, err
 	}
 	return &user, nil
 }
-
+func (c *UserRepository) GetUser(p *LoginParams) (*UserDB, error) {
+	var user UserDB
+	if err := c.db.Where("email = ?", p.Email).First(&user).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
 func NewUserRepository(db *gorm.DB) *UserRepository {
 	return &UserRepository{
 		db: db,

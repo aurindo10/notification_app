@@ -12,6 +12,7 @@ type UserResponseRepository struct {
 type Repository interface {
 	RegisterUser(p *entities.User) (*UserResponseRepository, error)
 	IsEmailAlreadyExists(p *string) (*UserDB, error)
+	GetUser(p *LoginParams) (*UserDB, error)
 }
 
 type UserDB struct {
@@ -21,4 +22,11 @@ type UserDB struct {
 	Name      string    `gorm:"column:name"`
 	Last_name *string   `gorm:"column:last_name"`
 	Email     *string   `gorm:"column:email"`
+}
+type LoginParams struct {
+	Email    *string `json:"email"`
+	Password *string `json:"password"`
+}
+type ResponseParamsLogin struct {
+	Token *string `json:"token"`
 }
