@@ -15,7 +15,8 @@ func (r *LoginUseCase) Execute(p *repositories.LoginParams) (*repositories.Respo
 	if error != nil {
 		return nil, error
 	}
-	password := []byte(res.Password)
+	password := []byte(*p.Password)
+
 	error = bcrypt.CompareHashAndPassword([]byte(res.Password), password)
 	if error != nil {
 		return nil, error
