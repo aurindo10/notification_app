@@ -8,4 +8,4 @@
 [x] Fazer test de cadastro de usuário duplicado
 [x] Login end point
 [x] Testes do endpoint de login sucess
-[] Testes do endpoint de login incorrect password
+[x] Testes do endpoint de login incorrect password

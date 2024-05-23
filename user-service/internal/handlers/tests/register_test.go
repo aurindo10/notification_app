@@ -103,7 +103,6 @@ func TestLogin(t *testing.T) {
 	if res.Token == nil {
 		t.Fatalf("token não gerado")
 	}
-	println(*res.Token)
 }
 func TestLoginWithWrongPassword(t *testing.T) {
 	clientData := map[string]string{
